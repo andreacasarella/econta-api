@@ -11,7 +11,6 @@ export const applyMiddleware = (
   }
 };
 
-
 type Handler = (
     req: Request,
     res: Response,

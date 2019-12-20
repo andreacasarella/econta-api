@@ -1,7 +1,7 @@
-import { getBanks } from "./providers/DataProvider";
+import { Banks } from "./providers/DataProvider";
 
 export const getBanksList = () => {
-    return getBanks();
+    return Banks.getBanks();
 }
 /*
 export const getPlacesByName = async (q: string) => {

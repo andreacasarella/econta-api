@@ -5,6 +5,8 @@ import middleware from "./middleware";
 import errorHandlers from "./middleware/errorHandlers";
 import routes from "./services";
 
+//https://itnext.io/production-ready-node-js-rest-apis-setup-using-typescript-postgresql-and-redis-a9525871407
+
 process.on("uncaughtException", e => {
   console.log(e);
   process.exit(1);
