@@ -23,3 +23,16 @@ const mock_services_banks = [{ "bankId": 1,
                     "createdAt": "Hello World",
                     "updatedAt": "Hello World"
                     }];
+
+                    const mock_services_bank_1 = { "bankId": 1,
+                    "name": "Raiffeisen",
+                    "logo": "",
+                    "swift": "82b92c",
+                    "clearing": "12345",
+                    "address": "test",
+                    "postalCode":"1234",
+                    "locality": "Lugano",
+                    "country": "Hello World",
+                    "createdAt": "Hello World",
+                    "updatedAt": "Hello World"
+                    };

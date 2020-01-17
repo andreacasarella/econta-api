@@ -6,9 +6,6 @@ import middleware from "../../middleware";
 import errorHandlers from "../../middleware/errorHandlers";
 import routes from "./routes";
 
-jest.mock("request-promise");
-(promiseRequest as any).mockImplementation(() => '{"features": []}');
-
 describe("routes", () => {
   let router: Router;
 
@@ -19,13 +16,28 @@ describe("routes", () => {
     applyMiddleware(errorHandlers, router);
   });
 
-  test("test route call", async () => {
+  test("GET /banks 200 - Get Bank List", async () => {
     const response = await request(router).get("/api/v1/banks");
     expect(response.status).toEqual(200);
   });
 
-  test("a non-existing api method", async () => {
+  test("POST /banks 400 - Create Bank with empty body", async () => {
+    const response = await request(router).post("/api/v1/banks");
+    expect(response.status).toEqual(400);
+  });
+
+  test("GET /banks 404 - Method not found", async () => {
     const response = await request(router).get("/api/v11/banks");
+    expect(response.status).toEqual(404);
+  });
+
+  test("GET /banks/:id 200 - Get Bank", async () => {
+    const response = await request(router).get("/api/v1/banks/1");
+    expect(response.status).toEqual(200);
+  });
+
+  test("GET /banks/:id 404 - Bank not found", async () => {
+    const response = await request(router).get("/api/v1/banks/0");
     expect(response.status).toEqual(404);
   });
   

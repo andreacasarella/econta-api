@@ -1,16 +1,38 @@
 import { Request, Response } from "express";
 import { getBank, getBanksList, createBank } from "./BanksController";
-import { checkSearchParams } from "../../middleware/checks";
+import { checkBody, checkIdParams } from "../../middleware/checks";
 
 
 export default [
+    {
+        path: "/api/v1/auth/login",
+        method: "get",
+        handler: [
+            //checkBody,
+            async ({ }: Request, res: Response) => {
+                //const result = await getBanksList();
+                res.status(200).send();
+            }
+        ]
+    },
+    {
+        path: "/api/v1/auth/logout",
+        method: "get",
+        handler: [
+           // checkBody,
+            async ({ }: Request, res: Response) => {
+                //const result = await getBanksList();
+                res.status(200).send();
+            }
+        ]
+    },
     {
         path: "/api/v1/banks",
         method: "get",
         handler: [
             //checkSearchParams,
-            async ({ }: Request, res: Response) => {
-                const result = await getBanksList();
+            async (req: Request, res: Response) => {
+                let result = await getBanksList();
                 res.status(200).send(result);
             }
         ]
@@ -19,9 +41,9 @@ export default [
         path: "/api/v1/banks",
         method: "post",
         handler: [
-            //checkSearchParams,
+            checkBody,
             async (req: Request, res: Response) => {
-                const result = await createBank(req.body);
+                let result = await createBank(req.body);
                 res.status(200).send(result);
             }
         ]
@@ -30,10 +52,9 @@ export default [
         path: "/api/v1/banks/:id",
         method: "get",
         handler: [
-            //checkSearchParams,
+            checkIdParams,
             async (req: Request, res: Response) => {
                 const result = await getBank(parseInt(req.params.id));
-                console.log(result);
                 if (result) {
                     res.status(200).send(result);
                 } else {
@@ -46,9 +67,8 @@ export default [
         path: "/api/v1/banks/:id",
         method: "delete",
         handler: [
-            //checkSearchParams,
+            checkIdParams,
             async (req: Request, res: Response) => {
-                //const result = await getBanksList();
                 res.status(200).send(req.params.id);
             }
         ]

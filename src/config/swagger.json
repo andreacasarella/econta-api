@@ -8,13 +8,115 @@
     "schemes": ["http"],
     "produces": ["application/json"],
     "paths": {
+        "/auth/login": {
+            "post": {
+                "tags": ["Auth"]
+            }
+        },
+        "/auth/logout": {
+            "post": {
+                "tags": ["Auth"]
+            }
+        },
         "/banks": {
             "get": {
-                "tags": ["Banks List"],
+                "tags": ["Banks"],
                 "summary": "Retrieve Banks list",
                 "responses": {
                     "200": {
                         "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                },
+                "content": {
+                    "application/json": {}
+                }
+            },
+            "post": {
+                "tags": ["Banks"],
+                "summary": "Retrieve Banks list",
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                },
+                "content": {
+                    "application/json": {}
+                }
+            }
+        },
+        "/banks/{bankId}": {
+            "get": {
+                "tags": ["Banks"],
+                "summary": "Retrieve Bank",
+                "parameters": [{
+                    "in": "path",
+                    "name": "bankId",
+                    "required": true,
+                    "type": "integer",
+                    "description": ""
+                }],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                },
+                "content": {
+                    "application/json": {}
+                }
+            },
+            "put": {
+                "tags": ["Banks"],
+                "summary": "Update Bank",
+                "parameters": [{
+                    "in": "path",
+                    "name": "bankId",
+                    "required": true,
+                    "type": "integer",
+                    "description": ""
+                }],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                },
+                "content": {
+                    "application/json": {}
+                }
+            },
+            "delete": {
+                "tags": ["Banks"],
+                "summary": "Delete Bank",
+                "parameters": [{
+                    "in": "path",
+                    "name": "bankId",
+                    "required": true,
+                    "type": "integer",
+                    "description": ""
+                }],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "404": {
+                        "description": "Not found"
                     },
                     "400": {
                         "description": "Bad request"

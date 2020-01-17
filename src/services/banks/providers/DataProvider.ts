@@ -1,4 +1,3 @@
-// TODO connect to DB and pu queries?
 import request from "request-promise";
 import dotenv from "dotenv";
 import mysql, { Connection } from 'mysql';
@@ -30,7 +29,7 @@ class Database {
             this.connection.end(err => {
                 if (err)
                     return reject(err);
-                console.log('Connection closed');
+                //console.log('Connection closed');
                 resolve();
             });
         });
@@ -44,7 +43,7 @@ export const Banks = {
         const database = new Database(environment.dbConfig);
         return database.query('SELECT * FROM banks')
             .then(rows => {
-                console.log('Called getBanks()');
+                //console.log('Called getBanks()');
                 database.close()
                 return JSON.parse(JSON.stringify(rows))
             });
@@ -54,7 +53,7 @@ export const Banks = {
         const database = new Database(environment.dbConfig);
         return database.query(`SELECT * FROM banks WHERE bankId=${id}`)
             .then(rows => {
-                console.log(`Called getBank(${id})`);
+                //console.log(`Called getBank(${id})`);
                 database.close()
                 if(rows.length > 0) return JSON.parse(JSON.stringify(rows[0]));
                 return null

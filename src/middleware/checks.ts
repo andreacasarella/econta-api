@@ -12,3 +12,29 @@ export const checkSearchParams = (
     next();
   }
 };
+
+export const checkIdParams = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  if (!req.params.id) {
+    throw new HTTP400Error("Missing :id parameter");
+  } else {
+    next();
+  }
+};
+
+export const checkBody = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  //console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
+  //console.log(Object.keys(req.body).length);
+  if (Object.keys(req.body).length === 0) {
+    throw new HTTP400Error("Missing body");
+  } else {
+    next();
+  }
+};
