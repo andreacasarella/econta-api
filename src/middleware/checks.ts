@@ -1,10 +1,10 @@
-import { Request, Response, NextFunction } from "express";
-import { HTTP400Error } from "../utils/httpErrors";
+import { NextFunction, Request, Response } from "express";
+import { HTTP400Error } from "../utils/http400Error";
 
 export const checkSearchParams = (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   if (!req.query.q) {
     throw new HTTP400Error("Missing q parameter");
@@ -16,10 +16,10 @@ export const checkSearchParams = (
 export const checkIdParams = (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
-  if (!req.params.id) {
-    throw new HTTP400Error("Missing :id parameter");
+  if (isNaN(+req.params.id)) {
+    throw new HTTP400Error("Wrong :id format");
   } else {
     next();
   }
@@ -28,10 +28,8 @@ export const checkIdParams = (
 export const checkBody = (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
-  //console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
-  //console.log(Object.keys(req.body).length);
   if (Object.keys(req.body).length === 0) {
     throw new HTTP400Error("Missing body");
   } else {
