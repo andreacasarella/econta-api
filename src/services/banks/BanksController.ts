@@ -2,7 +2,7 @@ import { Banks } from "./providers/DataProvider";
 
 export interface IBank {
   bankId: number;
-  name: string;
+  name: string | null;
   swift?: string | number;
   clearing?: string;
   address?: string;

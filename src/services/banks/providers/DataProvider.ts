@@ -17,14 +17,9 @@ export const Banks = {
         return database.query(query)
             .then((rows) => {
                 return JSON.parse(JSON.stringify(rows));
-            }, (error) => {
-                return database.close().then(() => { throw error; });
             })
-            .finally(
-                () => {
-                    return database.close();
-                },
-            );
+            .catch((error) => { throw error; })
+            .finally(() => database.close());
     },
 
     async getBank(id: number): Promise<IBank> {
@@ -33,12 +28,8 @@ export const Banks = {
             .then((rows) => {
                 if (rows.length > 0) { return JSON.parse(JSON.stringify(rows[0])); }
                 return null;
-            }, (error) => {
-                return database.close().then(() => { throw error; });
-            })
-            .finally(
-                () => database.close(),
-            );
+            }).catch((error) => { throw error; })
+            .finally(() => database.close());
     },
 
     async createBank(bank: IBank): Promise<IBank> {
@@ -49,13 +40,9 @@ export const Banks = {
                 result = rows;
                 return database.query(`SELECT * FROM banks WHERE bankId=${result.insertId}`);
             })
-            .then((banks) => {
-                return JSON.parse(JSON.stringify(banks[0]));
-            }, (error) => {
-                return database.close().then(() => { throw error; });
-            }).finally(
-                () => database.close(),
-            );
+            .then((banks) => JSON.parse(JSON.stringify(banks[0])))
+            .catch((error) => { throw error; })
+            .finally(() => database.close());
     },
 
     async deleteBank(id: number): Promise<IMysqlObjectDeleteResult> {
@@ -63,23 +50,15 @@ export const Banks = {
         return database.query(`DELETE FROM banks WHERE bankId=${id}`)
             .then((result) => {
                 return JSON.parse(JSON.stringify(result));
-            },
-                (error) => {
-                    return database.close().then(() => { throw error; });
-                }).finally(
-                    () => database.close(),
-                );
+            })
+            .catch((error) => { throw error; })
+            .finally(() => database.close());
     },
+
     async getError(): Promise<IMysqlObjectDeleteResult> {
-        const database = new Database(null);
+        const database = new Database(environment.dbConfig);
         return database.query(`TEST INTERNAL SERVER ERROR QUERY`)
-            .then((result) => {
-                return JSON.parse(JSON.stringify(result));
-            },
-                (error) => {
-                    return database.close().then(() => { throw error; });
-                }).finally(
-                    () => database.close(),
-                );
+            .catch((error) => { throw error; })
+            .finally(() => database.close());
     },
 };
